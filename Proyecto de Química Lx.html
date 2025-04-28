@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Acción de los analgésicos</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <h1>🩺 Acción de los analgésicos</h1>
+
+  <label for="tipo">Elige un analgésico:</label><br>
+  <select id="tipo">
+    <option value="paracetamol">Paracetamol</option>
+    <option value="ibuprofeno">Ibuprofeno</option>
+    <option value="morfina">Morfina</option>
+    <option value="lidocaina">Lidocaína</option>
+  </select><br>
+
+  <button onclick="iniciarSimulacion()">Iniciar Simulación</button>
+
+  <div class="resultado" id="resultado" style="display: none;">
+    <div id="imagen" class="imagen">💊</div>
+    <div id="texto"></div>
+  </div>
+
+  <button onclick="siguientePaso()" id="btnSiguiente" style="display:none;">Siguiente paso ➡</button>
+
+  <script>
+    let pasoActual = 0;
+    let pasos = [];
+
+    function iniciarSimulacion() {
+      const tipo = document.getElementById("tipo").value;
+      const resultado = document.getElementById("resultado");
+      const texto = document.getElementById("texto");
+      const imagen = document.getElementById("imagen");
+      const btn = document.getElementById("btnSiguiente");
+
+      resultado.style.display = "block";
+      btn.style.display = "inline-block";
+      pasoActual = 0;
+
+      if (tipo === "paracetamol") {
+        pasos = [
+          { emoji: "💊", texto: "El paracetamol es ingerido y absorbido en el intestino." },
+          { emoji: "🩸", texto: "Viaja por la sangre hacia el cerebro." },
+          { emoji: "🧠", texto: "Actúa en el cerebro bloqueando la producción de prostaglandinas." },
+          { emoji: "😌", texto: "Resultado: disminuye la fiebre y el dolor." }
+        ];
+      } else if (tipo === "ibuprofeno") {
+        pasos = [
+          { emoji: "💊", texto: "El ibuprofeno es ingerido y absorbido por el cuerpo." },
+          { emoji: "🩸", texto: "Se distribuye por la sangre a tejidos inflamados." },
+          { emoji: "⚙🛑", texto: "Bloquea las enzimas COX que causan inflamación y dolor." },
+          { emoji: "🌡😌", texto: "Resultado: reduce fiebre, dolor e inflamación." }
+        ];
+      } else if (tipo === "morfina") {
+        pasos = [
+          { emoji: "💉", texto: "La morfina es administrada por inyección o pastilla." },
+          { emoji: "🧠", texto: "Llega al cerebro y se une a receptores opioides." },
+          { emoji: "🔒📡", texto: "Bloquea las señales de dolor a nivel del sistema nervioso." },
+          { emoji: "😴", texto: "Resultado: potente alivio del dolor, sedación." }
+        ];
+      } else if (tipo === "lidocaina") {
+        pasos = [
+          { emoji: "📍", texto: "La lidocaína se aplica en una zona específica." },
+          { emoji: "⚡🛑", texto: "Bloquea los nervios en esa área para que no envíen señales." },
+          { emoji: "🧊", texto: "La zona se vuelve insensible temporalmente." },
+          { emoji: "😌", texto: "Resultado: anestesia local, sin dolor en el área tratada." }
+        ];
+      }
+
+      mostrarPaso();
+    }
+
+    function mostrarPaso() {
+      const imagen = document.getElementById("imagen");
+      const texto = document.getElementById("texto");
+
+      if (pasoActual < pasos.length) {
+        imagen.innerText = pasos[pasoActual].emoji;
+        texto.innerText = pasos[pasoActual].texto;
+      } else {
+        document.getElementById("btnSiguiente").style.display = "none";
+        texto.innerText = "✅ Fin de la simulación.";
+        imagen.innerText = "🎉";
+      }
+    }
+
+    function siguientePaso() {
+      pasoActual++;
+      mostrarPaso();
+    }
+  </script>
+
+</body>
+</html>
